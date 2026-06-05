@@ -1,0 +1,114 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  .site{background:#000;color:#fff;font-family:'Arial','Helvetica Neue',sans-serif;font-weight:300;}
+  .nav-top{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between;align-items:flex-start;padding:20px 28px 0;pointer-events:none;mix-blend-mode:difference;}
+  .nav-top-left{font-size:8.5px;letter-spacing:0.13em;text-transform:uppercase;color:#fff;font-weight:300;pointer-events:all;}
+  .nav-top-right{display:flex;gap:2px;pointer-events:all;}
+  .nav-link{font-size:9px;letter-spacing:0.13em;text-transform:uppercase;font-weight:300;color:#fff;text-decoration:none;padding:3px 8px;line-height:1.2;display:inline-block;transition:all 0.12s ease;}
+  .nav-link:hover{color:#000;background:#fff;}
+  .hero{position:relative;padding:0 28px;height:580px;overflow:hidden;display:flex;align-items:flex-end;margin-top:-44px;}
+  .cr{position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:8.5px;letter-spacing:0.1em;color:#fff;font-weight:300;}
+  .name-wrap{width:100%;display:flex;justify-content:space-between;align-items:flex-end;}
+  .name-part{font-size:clamp(100px,17vw,155px);font-weight:300;line-height:0.82;letter-spacing:-0.01em;text-transform:uppercase;font-family:'Arial','Helvetica Neue',sans-serif;white-space:nowrap;transform:scaleY(1.55);transform-origin:bottom center;display:inline-block;}
+  .grid-section{padding:20px 28px 100px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+  .item{position:relative;overflow:hidden;cursor:pointer;background:#0d0d0d;}
+  .item.portrait{aspect-ratio:3/4;}
+  .item.landscape{aspect-ratio:16/9;}
+  .item.square{aspect-ratio:1/1;}
+  .item.span2{grid-column:span 2;}
+  .item.span3{grid-column:span 3;}
+  .item img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hover-overlay{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;opacity:0;transition:opacity 0.18s ease;}
+  .item:hover .hover-overlay{opacity:1;}
+  .hover-title{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;font-weight:300;font-family:'Arial',sans-serif;color:#000;}
+  .hover-year{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;font-weight:300;font-family:'Arial',sans-serif;color:#666;}
+  .hover-box{display:inline-block;border:0.5px solid #000;padding:3px 6px;font-size:7.5px;letter-spacing:0.15em;text-transform:uppercase;color:#000;font-weight:300;font-family:'Arial',sans-serif;line-height:1.1;margin-top:2px;white-space:nowrap;}
+  .nav-bottom{position:sticky;bottom:0;z-index:200;padding:0 28px 20px;pointer-events:none;mix-blend-mode:difference;}
+  .nav-bottom-info{display:flex;flex-direction:column;gap:3px;pointer-events:all;}
+  .nav-bottom-info span{font-size:8.5px;letter-spacing:0.13em;text-transform:uppercase;color:#fff;font-weight:300;line-height:1.8;}
+</style>
+
+<div class="site">
+  <div class="nav-top">
+    <span class="nav-top-left">Art &amp; Design Direction, Creative Consultant, Branding, Production</span>
+    <div class="nav-top-right">
+      <a class="nav-link" href="#">About</a>
+      <a class="nav-link" href="#">Work</a>
+      <a class="nav-link" href="#">Contact</a>
+      <a class="nav-link" href="#">Instagram</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <span class="cr">© 2025</span>
+    <div class="name-wrap">
+      <span class="name-part">MESGHOUNI</span>
+      <span class="name-part">ARTS</span>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="grid" id="grid">
+      <!-- images injected by script -->
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <div class="nav-bottom-info">
+      <span>Open for Projects and Commissions</span>
+      <span>hello@mesghouniarts.com</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {src: null, id: 'flouz', cls: 'portrait span1', title: 'Flouz Not Fugazi', year: 'Photography — 2026'},
+  {src: null, id: 'neezy', cls: 'landscape span2', title: '24STD mit Neezy', year: 'Thumbnail — 2025'},
+  {src: null, id: 'medina', cls: 'landscape span2', title: 'Medina Roadmap', year: 'Visual Design — 2025'},
+  {src: null, id: 'flouz2', cls: 'portrait span1', title: 'Art Direction', year: 'Photography — 2026'},
+];
+
+function makeItem(p, src) {
+  const div = document.createElement('div');
+  div.className = 'item ' + p.cls;
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = p.title;
+  if(p.id === 'flouz2') img.style.objectPosition = 'center 30%';
+  const overlay = document.createElement('div');
+  overlay.className = 'hover-overlay';
+  overlay.innerHTML = `<span class="hover-title">${p.title}</span><span class="hover-year">${p.year}</span><span class="hover-box">View Project</span>`;
+  div.appendChild(img);
+  div.appendChild(overlay);
+  return div;
+}
+
+async function loadImages() {
+  const grid = document.getElementById('grid');
+  try {
+    const resp = await fetch('/__img__/mesghouni_arts');
+    const data = await resp.json();
+    const imgs = {flouz: data.flouz, neezy: data.neezy, medina: data.medina, flouz2: data.flouz};
+    projects.forEach(p => {
+      grid.appendChild(makeItem(p, imgs[p.id] || ''));
+    });
+  } catch(e) {
+    // fallback dark placeholders
+    projects.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'item ' + p.cls;
+      div.style.background = '#111';
+      const overlay = document.createElement('div');
+      overlay.className = 'hover-overlay';
+      overlay.innerHTML = `<span class="hover-title">${p.title}</span><span class="hover-year">${p.year}</span><span class="hover-box">View Project</span>`;
+      div.appendChild(overlay);
+      grid.appendChild(div);
+    });
+  }
+}
+loadImages();
+</script>
