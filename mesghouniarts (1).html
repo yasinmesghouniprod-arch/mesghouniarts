@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MESGOUNI ARTS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #000;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      position: fixed;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 5;
+    }
+    .page.active { display: flex; }
+
+    .page-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    /* ── BACKGROUND ORBS ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0;
+      animation: pulse 9s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 750px; height: 750px;
+      background: radial-gradient(circle, #2550a0 0%, #0a1830 55%, transparent 75%);
+      top: -150px; left: 25%;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #3070c0 0%, #0d2550 50%, transparent 75%);
+      top: 80px; right: 10%;
+      animation-delay: 1.8s;
+    }
+    .orb-3 {
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, #50a0e0 0%, #1a4070 60%, transparent 80%);
+      bottom: -60px; left: 15%;
+      animation-delay: 3.5s;
+    }
+    .orb-4 {
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, #90d0ff 0%, #2570b0 60%, transparent 80%);
+      top: 45%; left: 52%;
+      transform: translate(-50%,-50%);
+      animation-delay: 2.2s;
+    }
+
+    @keyframes pulse {
+      0%   { opacity: 0;    transform: scale(0.94); }
+      20%  { opacity: 0.9; }
+      50%  { opacity: 0.75; transform: scale(1.06); }
+      80%  { opacity: 0.9; }
+      100% { opacity: 0;    transform: scale(0.94); }
+    }
+
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* ── GLASS CARD ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      /* Bright Apple-style frosted glass */
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.38) 0%,
+        rgba(255,255,255,0.22) 40%,
+        rgba(200,220,255,0.18) 100%
+      );
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 22px;
+      padding: 22px 32px 20px;
+      backdrop-filter: blur(36px) saturate(1.8) brightness(1.1);
+      -webkit-backdrop-filter: blur(36px) saturate(1.8) brightness(1.1);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.6) inset,
+        0 1px 0 rgba(255,255,255,0.9) inset,
+        0 12px 60px rgba(0,0,0,0.45),
+        0 4px 100px rgba(100,180,255,0.15);
+      width: 90vw;
+      max-width: 680px;
+      animation: fadeUp 1s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* bright top shine */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 14px; right: 14px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95) 35%, rgba(255,255,255,1) 65%, transparent);
+      border-radius: 1px;
+    }
+
+    /* ── TOP ROW ── */
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.04em;   /* tight */
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+
+    .tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      line-height: 1.6;
+      text-align: right;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.5) 80%, transparent);
+      margin-bottom: 14px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      gap: 2px;
+      justify-content: space-between;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 0;           /* sharp square */
+      transition: color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      color: #000;
+      background: #fff;
+    }
+
+    nav a.active {
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- background -->
+  <div class="bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+  <!-- pages -->
+  <div class="page active" id="page-home">
+    <span class="page-label">Welcome</span>
+    <h1 class="page-title">Home</h1>
+  </div>
+  <div class="page" id="page-work">
+    <span class="page-label">Portfolio</span>
+    <h1 class="page-title">Work</h1>
+  </div>
+  <div class="page" id="page-about">
+    <span class="page-label">Story</span>
+    <h1 class="page-title">About</h1>
+  </div>
+  <div class="page" id="page-contact">
+    <span class="page-label">Get in touch</span>
+    <h1 class="page-title">Contact</h1>
+  </div>
+
+  <!-- glass card -->
+  <div class="card">
+    <div class="card-top">
+      <div class="brand">MESGOUNI ARTS</div>
+      <div class="tagline">Visual Art &amp; Design<br>— Creative, Bold, Intentional.</div>
+    </div>
+    <div class="divider"></div>
+    <nav>
+      <a href="#" class="active" data-page="home">Home</a>
+      <a href="#" data-page="work">Work</a>
+      <a href="#" data-page="about">About</a>
+      <a href="#" data-page="contact">Contact</a>
+    </nav>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const pages = document.querySelectorAll('.page');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.dataset.page;
+
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        pages.forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + target).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
