@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MESGOUNI ARTS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Space+Mono&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden; background: #000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0; animation: pulse 9s ease-in-out infinite; }
+    .orb-1 { width:800px;height:800px;background:radial-gradient(circle,#1a3d80 0%,#060f25 55%,transparent 75%);top:-180px;left:20%; }
+    .orb-2 { width:650px;height:650px;background:radial-gradient(circle,#2a6ab8 0%,#0a1e45 50%,transparent 75%);top:50px;right:5%;animation-delay:1.8s; }
+    .orb-3 { width:500px;height:500px;background:radial-gradient(circle,#4a9ee0 0%,#112e55 60%,transparent 80%);bottom:-80px;left:10%;animation-delay:3.5s; }
+    .orb-4 { width:350px;height:350px;background:radial-gradient(circle,#80c8ff 0%,#1a50a0 60%,transparent 80%);top:44%;left:50%;transform:translate(-50%,-50%);animation-delay:2.2s; }
+    @keyframes pulse {
+      0%   { opacity:0; transform:scale(0.94); }
+      20%  { opacity:1; }
+      50%  { opacity:0.8; transform:scale(1.06); }
+      80%  { opacity:1; }
+      100% { opacity:0; transform:scale(0.94); }
+    }
+    .card {
+      position: relative; z-index: 10;
+      background: linear-gradient(175deg, rgba(255,255,255,0.28) 0%, rgba(200,220,255,0.18) 60%, rgba(160,200,255,0.12) 100%);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 18px; padding: 20px 28px 17px;
+      backdrop-filter: blur(40px) saturate(1.5) brightness(1.15);
+      -webkit-backdrop-filter: blur(40px) saturate(1.5) brightness(1.15);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset, 0 0 0 0.5px rgba(255,255,255,0.25) inset, 0 12px 50px rgba(0,0,0,0.5);
+      width: 380px; overflow: hidden;
+      animation: fadeUp 0.9s cubic-bezier(.16,1,.3,1) both;
+    }
+    .card::before {
+      content: ''; position: absolute;
+      top: 0; left: 20px; right: 20px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9) 40%, rgba(255,255,255,1) 60%, transparent);
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px) scale(0.98); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    .card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .brand { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.01em; color:#fff; line-height:1; white-space:nowrap; cursor:pointer; text-decoration:none; }
+    .tagline { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:0.07em; color:rgba(255,255,255,0.85); text-transform:uppercase; line-height:1.7; text-align:right; }
+    .divider { height:0.5px; background:rgba(255,255,255,0.25); margin-bottom:13px; }
+    nav { display:flex; justify-content:space-between; }
+    nav a {
+      font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.1em;
+      text-transform:uppercase; color:rgba(255,255,255,0.9); text-decoration:none;
+      padding:4px 4px; border-radius:0; transition:color 0.1s, background 0.1s; cursor:pointer;
+    }
+    nav a:hover, nav a.active { color:#000; background:#fff; }
+    .contact-section { display:none; flex-direction:column; }
+    .contact-section.visible { display:flex; }
+    .contact-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.9); padding:10px 0; }
+    .contact-inner { background:rgba(10,12,20,0.75); border-radius:8px; overflow:hidden; }
+    .contact-inner input, .contact-inner textarea {
+      display:block; width:100%; background:transparent; border:none;
+      border-bottom:0.5px solid rgba(255,255,255,0.08); padding:13px 16px;
+      font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.1em;
+      text-transform:uppercase; color:rgba(255,255,255,0.9); outline:none; resize:none;
+    }
+    .contact-inner input::placeholder, .contact-inner textarea::placeholder { color:rgba(255,255,255,0.3); }
+    .contact-inner textarea { border-bottom:none; height:100px; }
+    .send-btn {
+      display:block; width:100%; margin-top:12px; padding:11px;
+      background:#fff; color:#000; border:none; border-radius:0;
+      font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.15em;
+      text-transform:uppercase; cursor:pointer; transition:background 0.15s;
+    }
+    .send-btn:hover { background:rgba(255,255,255,0.85); }
+    .copyright { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); text-align:center; padding-top:12px; padding-bottom:2px; }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    <div class="orb orb-3"></div><div class="orb orb-4"></div>
+  </div>
+  <div class="card">
+    <div class="card-top">
+      <a class="brand" href="index.html">MESGOUNI ARTS</a>
+      <div class="tagline">Visual Art &amp; Design<br>— Creative, Bold, Intentional.</div>
+    </div>
+    <div class="divider"></div>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="work.html">Work</a>
+      <a href="about.html">About</a>
+      <a href="#" id="contactLink">Contact</a>
+    </nav>
+    <div class="contact-section" id="contact-section">
+      <div class="contact-label">Contact</div>
+      <form id="contactForm" action="https://formspree.io/f/meewlonn" method="POST">
+        <div class="contact-inner">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Text" required></textarea>
+        </div>
+        <button type="submit" class="send-btn" id="sendBtn">Send</button>
+      </form>
+      <div id="successMsg" style="display:none;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;padding:12px 0;">Message sent ✓</div>
+      <div class="copyright">Copyright Mesgouni Arts 2026</div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('contactLink').addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+      document.getElementById('contactLink').classList.add('active');
+      document.getElementById('contact-section').classList.toggle('visible');
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('sendBtn');
+      btn.textContent = 'Sending...';
+      const res = await fetch(e.target.action, {
+        method: 'POST',
+        body: new FormData(e.target),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        e.target.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        btn.textContent = 'Error — try again';
+      }
+    });
+  </script>
+</body>
+</html>
