@@ -229,11 +229,11 @@
     </div>
     <div class="divider"></div>
     <nav>
-      <a href="#" data-page="home" class="active">Home</a>
-      <a href="#" data-page="work">Work</a>
-      <a href="#" data-page="about">About</a>
-      <a href="#" data-page="contact">Contact</a>
-    </nav>
+  <a href="index.html">Home</a>
+  <a href="work.html">Work</a>
+  <a href="about.html">About</a>
+  <a href="contact.html" class="active">Contact</a>
+</nav>
 
     <!-- contact form, hidden by default -->
     <div class="contact-section" id="contact-section">
@@ -248,23 +248,6 @@
     </div>
   </div>
 
-  <script>
-    const links = document.querySelectorAll('nav a');
-    const contactSection = document.getElementById('contact-section');
-
-    links.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        links.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-
-        if (link.dataset.page === 'contact') {
-          contactSection.classList.add('visible');
-        } else {
-          contactSection.classList.remove('visible');
-        }
-      });
-    });
-  </script>
+ 
 </body>
 </html>
